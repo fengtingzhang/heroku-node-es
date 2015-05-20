@@ -1,0 +1,3 @@
+[{"prod":"no","platform":"Dash","name":"Documents","category":"Core","dev":"yes","int":"yes","qa":"no"},
+{"prod":"yes","platform":"Dash","name":"Search","category":"Core","dev":"yes","int":"yes","qa":"yes"},
+{"prod":"yes","platform":"Dash","name":"UIToolkit","category":"Toolkit","dev":"yes","int":"yes","qa":"yes"}]

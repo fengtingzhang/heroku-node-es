@@ -145,7 +145,7 @@ app.get('/autocomplete', function (req, res) {
         }
     }).then(function (resp) {
         var results = resp.hits.hits.map(function(hit){
-            return hit._source.platform + " " + hit._source.name;
+            return hit._source.name;
         });
 
         res.send(results);

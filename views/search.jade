@@ -8,7 +8,7 @@ block content
         .span3
 
             div
-            if response.hits.total > 0
+            if response && response.hits && response.hits.total > 0
 
                 dl
                     dt Categories
@@ -47,33 +47,36 @@ block content
 
         .span9
 
-            h4 #{response.hits.total} Matching Services and Apps
-
-            if response.hits.total > 0
-                table.table.table-bordered
-                    thead
-                        tr
-                            th Platform
-                            th Name
-                            th Category
-                            th DEV/UAT
-                            th INT
-                            th QA
-                            th PROD
-                                tbody
-                        each endpoint in response.hits.hits
-                            tr
-                                td= endpoint._source.platform
-                                td= endpoint._source.name
-                                td= endpoint._source.category
-                                td= endpoint._source.dev
-                                td= endpoint._source.int
-                                td= endpoint._source.qa
-                                td= endpoint._source.prod
-            else if response.suggest.simple_phrase[0].options[0]
-                p
-                    | Did you mean&nbsp;
-                    a(href="/?q=" + response.suggest.simple_phrase[0].options[0].text) !{response.suggest.simple_phrase[0].options[0].highlighted}
-                    | ?
+            if !response || response && !response.hits
+               h4 No Matching Services and Apps
             else
-                p No resulsts found for keyword #[b #{query}]
+                if response.hits.hits
+                    h4 #{response.hits.total} Matching Services and Apps
+                    table.table.table-bordered
+                        thead
+                            tr
+                                th Platform
+                                th Name
+                                th Category
+                                th DEV/UAT
+                                th INT
+                                th QA
+                                th PROD
+                                    tbody
+                            each endpoint in response.hits.hits
+                                tr
+                                    td= endpoint._source.platform
+                                    td= endpoint._source.name
+                                    td= endpoint._source.category
+                                    td= endpoint._source.dev
+                                    td= endpoint._source.int
+                                    td= endpoint._source.qa
+                                    td= endpoint._source.prod
+                else if response.suggest.simple_phrase[0].options[0]
+                    p
+                        | Did you mean&nbsp;
+                        a(href="/?q=" + response.suggest.simple_phrase[0].options[0].text) !{response.suggest.simple_phrase[0].options[0].highlighted}
+                        | ?
+                else
+                    p No resulsts found for keyword #[b #{query}]
+

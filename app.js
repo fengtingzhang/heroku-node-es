@@ -8,14 +8,13 @@ var express = require('express'),
     logger = require('morgan'),
     methodOverride = require('method-override'),
     bodyParser = require('body-parser'),
-    multer = require('multer'),
     errorHandler = require('errorhandler'),
     fs = require('fs');
 
 var elasticSearchUrl = 'localhost:9200';
 if (process.env.ELASTICSEARCH_URL) {
     elasticSearchUrl = process.env.ELASTICSEARCH_URL;
-} 
+}
 
 var client = new elasticsearch.Client({
     host: elasticSearchUrl,
@@ -33,7 +32,6 @@ app.use(logger('dev'));
 app.use(methodOverride());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(multer());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Provide a route for reprocessing some data
